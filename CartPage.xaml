@@ -1,0 +1,30 @@
+﻿<Page x:Class="KuzminChudoObuv.CartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Корзина" FontFamily="Calibri" Background="White">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Оформление заказа" FontSize="24" FontWeight="Bold"/>
+
+        <ListView Grid.Row="1" Name="CartListView" Margin="0,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Товар" DisplayMemberBinding="{Binding ProductName}" Width="300"/>
+                    <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding SizeText}" Width="100"/>
+                    <GridViewColumn Header="Кол-во" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
+                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding Total, StringFormat={}{0:N2}}" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <TextBlock Name="TotalText" FontSize="20" VerticalAlignment="Center" Margin="0,0,20,0"/>
+            <Button Content="Оформить заказ" Width="180" Height="40" FontSize="16" Click="Checkout_Click" Background="#70B2AF"/>
+        </StackPanel>
+    </Grid>
+</Page>

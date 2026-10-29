@@ -1,39 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KuzminChudoObuv
 {
-    /// <summary>
-    /// Логика взаимодействия для ProductPage.xaml
-    /// </summary>
     public partial class ProductPage : Page
     {
         public ProductPage()
         {
             InitializeComponent();
-            if (ManagerClass.CurrentUser != null)
-            {
-                FIOTB.Text = "Вы вошли как: " + ManagerClass.CurrentUser.UserSurname + " " +
-                             ManagerClass.CurrentUser.UserName + " " +
-                             ManagerClass.CurrentUser.UserPatronymic;
-            }
-            else
-            {
-                FIOTB.Text = "Вы вошли как: Гость";
-            }
+            FIOTB.Text = ManagerClass.CurrentUser != null ? ManagerClass.CurrentUser.UserSurname : "Гость";
 
+            // Загрузка категорий
             var cats = KuzminChudoObuvEntities.GetContext().Categories.ToList();
             cats.Insert(0, new Categories { ID_Category = 0, CategoryName = "Все категории" });
             ComboCategory.ItemsSource = cats;
@@ -46,38 +27,67 @@ namespace KuzminChudoObuv
         private void UpdateProduct()
         {
             var ctx = KuzminChudoObuvEntities.GetContext();
-            var products = ctx.Products.ToList();
-            var stock = ctx.StockItems.Include("Sizes").ToList();
 
+            // Загружаем товары с подгрузкой связанных таблиц
+            var products = ctx.Products
+                .Include("Manufactures")
+                .Include("StockItems")
+                .ToList();
+
+            // Заполняем расчетные поля (количество, скидка, размеры)
             foreach (var p in products)
             {
-                var sizes = stock
-                    .Where(s => s.ID_Product == p.ID_Product && s.ItemsQuantity > 0)
+                // 1. Считаем общее количество
+                int totalQty = p.StockItems.Sum(s => s.ItemsQuantity);
+                p.QuantityText = totalQty > 5 ? "много" : "мало";
+                p.IsLowStock = totalQty <= 3; // Если <= 3 — будет подсветка красным
+
+                // 2. Считаем цену со скидкой (пока просто как есть, без скидки)
+                p.DiscountPriceText = p.ProductCost.ToString("0.00") + " ₽";
+
+                // 3. Размеры (если нужно)
+                var sizes = p.StockItems.Where(s => s.ItemsQuantity > 0)
                     .Select(s => s.Sizes.Size.ToString(System.Globalization.CultureInfo.InvariantCulture))
                     .ToList();
-
-                p.SizesText = "Размеры: " + string.Join(",     ", sizes);
+                p.SizesText = "Размеры: " + string.Join(", ", sizes);
             }
 
+            // Фильтр по категории
             var cat = ComboCategory.SelectedItem as Categories;
             if (cat != null && cat.ID_Category != 0)
+            {
                 products = products.Where(p => p.ID_Category == cat.ID_Category).ToList();
+            }
 
-            if (!string.IsNullOrWhiteSpace(TBoxSearch.Text))
-                products = products.Where(p => p.ProductName.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
-
-            if (RButtonUp.IsChecked == true) products = products.OrderBy(p => p.ProductCost).ToList();
-            if (RButtonDown.IsChecked == true) products = products.OrderByDescending(p => p.ProductCost).ToList();
+            // Поиск по названию и описанию
+            string search = TBoxSearch.Text.Trim().ToLower();
+            if (search.Length > 0)
+            {
+                products = products.Where(p =>
+                    (p.ProductName != null && p.ProductName.ToLower().Contains(search)) ||
+                    (p.ProductDescription != null && p.ProductDescription.ToLower().Contains(search))
+                ).ToList();
+            }
 
             ProductListView.ItemsSource = products;
-            TBCount.Text = "Найдено: " + products.Count;
         }
 
         private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e) { UpdateProduct(); }
         private void ComboCategory_SelectionChanged(object sender, SelectionChangedEventArgs e) { UpdateProduct(); }
-        private void RButtonUp_Checked(object sender, RoutedEventArgs e) { if (IsLoaded) UpdateProduct(); }
-        private void RButtonDown_Checked(object sender, RoutedEventArgs e) { if (IsLoaded) UpdateProduct(); }
-        private void Button_Click(object sender, RoutedEventArgs e) { ManagerClass.MainFrame.Navigate(new AddEditPage()); }
+
+        private void CartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ManagerClass.MainFrame.Navigate(new CartPage());
+        }
+
+        // Переход на страницу товара по двойному клику
+        private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedProduct = ProductListView.SelectedItem as Products;
+            if (selectedProduct != null)
+            {
+                ManagerClass.MainFrame.Navigate(new ProductDetailPage(selectedProduct));
+            }
+        }
     }
-    
 }
