@@ -8,43 +8,37 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <TextBlock Text="Оформление заказа" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
-
-        <ListView Grid.Row="1" Name="CartListView" Margin="0,10">
+        <TextBlock Text="Оформление заказа" FontSize="24" FontWeight="Bold" Margin="5"/>
+        <ListView Grid.Row="1" Name="CartListView" Margin="10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Товар" DisplayMemberBinding="{Binding ProductName}" Width="300"/>
-                    <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding SizeText}" Width="100"/>
-
+                    <GridViewColumn Header="Товар" DisplayMemberBinding="{Binding ProductNameForCart}" Width="300"/>
+                    <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding SizeTextForCart}" Width="100"/>
                     <GridViewColumn Header="Кол-во" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="-" Width="25" Height="25" Click="Minus_Click" Tag="{Binding}"/>
+                                    <Button Content="-" Width="25" Height="25" Margin="5" Click="Minus_Click" Tag="{Binding}"/>
                                     <TextBlock Text="{Binding Quantity}" Width="30" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
-                                    <Button Content="+" Width="25" Height="25" Click="Plus_Click" Tag="{Binding}"/>
+                                    <Button Content="+" Width="25" Height="25" Margin="5" Click="Plus_Click" Tag="{Binding}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-
-                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding Total, StringFormat={}{0:N2}}" Width="100"/>
-
+                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding TotalForCart, StringFormat={}{0:N2}}" Width="100"/>
                     <GridViewColumn Header="" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Удалить" Width="80" Height="25" Click="Remove_Click" Tag="{Binding}"/>
+                                <Button Content="Удалить" Width="80" Height="25" Margin="5" Click="Remove_Click" Tag="{Binding}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <TextBlock Name="TotalText" FontSize="20" VerticalAlignment="Center" Margin="0,0,20,0"/>
-            <Button Content="Оформить заказ" Width="180" Height="40" FontSize="16" Click="Checkout_Click" Background="#70B2AF"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <TextBlock Name="TotalText" FontSize="20" VerticalAlignment="Center" Margin="5"/>
+            <Button Content="Оформить заказ" Width="180" Height="40" FontSize="16" Margin="20" Click="Checkout_Click" Background="#70B2AF"/>
         </StackPanel>
     </Grid>
 </Page>

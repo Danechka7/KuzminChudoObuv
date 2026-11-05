@@ -34,6 +34,7 @@ namespace KuzminChudoObuv
     
         public DbSet<Categories> Categories { get; set; }
         public DbSet<Manufactures> Manufactures { get; set; }
+        public DbSet<OrderProducts> OrderProducts { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Products> Products { get; set; }
         public DbSet<Roles> Roles { get; set; }
@@ -41,6 +42,5 @@ namespace KuzminChudoObuv
         public DbSet<StockItems> StockItems { get; set; }
         public DbSet<Subcategories> Subcategories { get; set; }
         public DbSet<Users> Users { get; set; }
-        public DbSet<OrderProducts> OrderProducts { get; set; }
     }
 }

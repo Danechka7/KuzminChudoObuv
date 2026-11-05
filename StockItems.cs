@@ -19,13 +19,13 @@ namespace KuzminChudoObuv
             this.OrderProducts = new HashSet<OrderProducts>();
         }
     
-        public int ID_Item { get; set; }
+        public int ID_StockItem { get; set; }
         public int ID_Product { get; set; }
         public int ID_Size { get; set; }
         public int ItemsQuantity { get; set; }
     
+        public virtual ICollection<OrderProducts> OrderProducts { get; set; }
         public virtual Products Products { get; set; }
         public virtual Sizes Sizes { get; set; }
-        public virtual ICollection<OrderProducts> OrderProducts { get; set; }
     }
 }

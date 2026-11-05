@@ -11,14 +11,14 @@ namespace KuzminChudoObuv
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Products
     {
         public Products()
         {
             this.StockItems = new HashSet<StockItems>();
         }
-    
+
         public int ID_Product { get; set; }
         public string ProductName { get; set; }
         public int ID_Subcategory { get; set; }
@@ -28,33 +28,28 @@ namespace KuzminChudoObuv
         public decimal ProductCost { get; set; }
         public int ID_Category { get; set; }
         public string ProductImage { get; set; }
-        public string ImagePath { get { return "/Images/" + ProductImage; } }
+
+        public decimal DiscountPrice { get; set; }
+
+        public string ImagePath
+        {
+            get { return string.IsNullOrEmpty(ProductImage) ? "/Images/picture.png" : "/Images/" + ProductImage; }
+        }
+
         public string CategorY
         {
             get
             {
-                if (ID_Category == 1)
-                {
-                    return "Детская обувь";
-                }
-                else if (ID_Category == 2)
-                {
-                    return "Женская обувь";
-                }
-                else
-                {
-                    return "Мужская обувь";
-                }
+                if (ID_Category == 1) return "Детская обувь";
+                else if (ID_Category == 2) return "Женская обувь";
+                else return "Мужская обувь";
             }
         }
-        public string SizesText { get; set; }
-        public string DiscountPriceText { get; set; }
-        public string QuantityText { get; set; }
-        public bool IsLowStock { get; set; }
 
         public virtual Categories Categories { get; set; }
         public virtual Manufactures Manufactures { get; set; }
         public virtual Subcategories Subcategories { get; set; }
         public virtual ICollection<StockItems> StockItems { get; set; }
+
     }
 }

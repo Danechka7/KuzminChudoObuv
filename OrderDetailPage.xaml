@@ -1,4 +1,4 @@
-﻿<Page x:Class="KuzminChudoObuv.OrderDetailsPage"
+﻿<Page x:Class="KuzminChudoObuv.OrderDetailPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Состав заказа" FontFamily="Calibri" Background="White">
@@ -8,24 +8,20 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+        <StackPanel Grid.Row="0" Margin="10">
             <TextBlock Name="OrderInfoText" FontSize="24" FontWeight="Bold"/>
-            <TextBlock Name="ClientInfoText" FontSize="16" Margin="0,5"/>
+            <TextBlock Name="ClientInfoText" FontSize="16" Margin="5"/>
         </StackPanel>
-
-        <ListView Grid.Row="1" Name="OrderItemsListView">
+        <ListView Grid.Row="1" Name="OrderItemsListView" Margin="10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Товар" DisplayMemberBinding="{Binding ProductName}" Width="300"/>
-                    <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding SizeText}" Width="100"/>
+                    <GridViewColumn Header="Товар" DisplayMemberBinding="{Binding StockItems.Products.ProductName}" Width="300"/>
+                    <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding StockItems.Sizes.Size}" Width="100"/>
                     <GridViewColumn Header="Кол-во" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
-                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Price, StringFormat={}{0:N2} ₽}" Width="120"/>
-                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding TotalSum, StringFormat={}{0:N2} ₽}" Width="120"/>
+                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding PriceAtOrderTime, StringFormat={}{0:N2} ₽}" Width="120"/>
                 </GridView>
             </ListView.View>
         </ListView>
-
-        <TextBlock Grid.Row="2" Name="TotalText" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,10,0,0"/>
+        <TextBlock Grid.Row="2" Name="TotalText" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right" Margin="10"/>
     </Grid>
 </Page>

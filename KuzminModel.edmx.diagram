@@ -4,26 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9adb5d231a964dfda0362bd56dfeeeb7" Name="Diagram1">
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.Categories" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.Manufactures" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.Orders" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.Products" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.Roles" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.Sizes" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.StockItems" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.Subcategories" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.Users" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Кузьмин_Чудо_ОбувьModel.OrderProducts" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_Products_Categories" ManuallyRouted="false" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_Products_Manufactures" ManuallyRouted="false" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_OrderProducts_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_Orders_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_Products_Subcategories" ManuallyRouted="false" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_StockItems_Products" ManuallyRouted="false" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_Users_Roles" ManuallyRouted="false" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_StockItems_Sizes" ManuallyRouted="false" />
-        <AssociationConnector Association="Кузьмин_Чудо_ОбувьModel.FK_OrderProducts_StockItems" ManuallyRouted="false" />
+      <Diagram DiagramId="b491380315974c4da3d3f738f48298ba" Name="Diagram1">
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.Categories" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.Manufactures" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.OrderProducts" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.Orders" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.Products" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.Roles" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.Sizes" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.StockItems" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.Subcategories" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Kuzmin_ChudoObuvModel.Users" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__Products__ID_Cat__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__Products__ID_Man__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__OrderProd__ID_Or__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__OrderProd__ID_St__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__Orders__ID_User__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__Products__ID_Sub__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__StockItem__ID_Pr__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__Users__ID_Role__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="Kuzmin_ChudoObuvModel.FK__StockItem__ID_Si__5CD6CB2B" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -33,13 +33,19 @@ namespace KuzminChudoObuv
         private void MainFrame_ContentRendered(object sender, EventArgs e)
         {
             if (MainFrame.CanGoBack)
-            {
                 BtnBack.Visibility = Visibility.Visible;
-            }
             else
-            {
                 BtnBack.Visibility = Visibility.Hidden;
-            }
+            if (MainFrame.Content is ProductPage)
+                BtnLogout.Visibility = Visibility.Visible;
+            else
+                BtnLogout.Visibility = Visibility.Collapsed;
+        }
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            ManagerClass.CurrentUser = null;
+            ManagerClass.Cart.Clear();
+            ManagerClass.MainFrame.Navigate(new AuthPage());
         }
     }
 }

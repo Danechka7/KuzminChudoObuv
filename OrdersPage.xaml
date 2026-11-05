@@ -7,24 +7,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
             <TextBlock Text="Список всех заказов" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
-            <Button Name="DeleteBtn" Content="Удалить заказ" Width="150" Height="35" Margin="20,0,0,0" 
-                    Click="Delete_Click" Background="#FF8080"/>
+            <Button Name="DeleteBtn" Content="Удалить заказ" Width="150" Height="35" Margin="20" Click="Delete_Click" Background="#FF8080"/>
         </StackPanel>
-
-        <ListView Grid.Row="1" Name="OrdersListView" MouseDoubleClick="OrdersListView_MouseDoubleClick">
+        <ListView Grid.Row="1" Name="OrderListView" Margin="10" MouseDoubleClick="OrderListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="№" DisplayMemberBinding="{Binding ID_Order}" Width="80"/>
                     <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding OrderDate, StringFormat=dd.MM.yyyy}" Width="150"/>
-                    <!-- Вот тут выводим ФИО -->
                     <GridViewColumn Header="ФИО Клиента" DisplayMemberBinding="{Binding ClientFIO}" Width="300"/>
-                    <!-- Вот тут выводим сумму -->
-                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding TotalSumText}" Width="150"/>
+                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding TotalSum, StringFormat={}{0:N2} ₽}" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>
     </Grid>
-</Page>
+</Page> 

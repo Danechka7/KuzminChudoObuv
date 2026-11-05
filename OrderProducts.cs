@@ -14,10 +14,11 @@ namespace KuzminChudoObuv
     
     public partial class OrderProducts
     {
-        public int ID_Item { get; set; }
+        public int ID_OrderItem { get; set; }
         public int ID_Order { get; set; }
+        public int ID_StockItem { get; set; }
         public int Quantity { get; set; }
-        public Nullable<int> ID_StockItem { get; set; }
+        public decimal PriceAtOrderTime { get; set; }
     
         public virtual Orders Orders { get; set; }
         public virtual StockItems StockItems { get; set; }

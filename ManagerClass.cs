@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,59 +20,33 @@ namespace KuzminChudoObuv
         public static Frame MainFrame { get; set; }
         public static Users CurrentUser { get; set; }
         public static List<CartItem> Cart = new List<CartItem>();
-
-        public static void AddToCart(int stockItemId, string productName, string sizeText, int qty, decimal price)
+        public static void AddToCart(int id, string name, string size, int qty, decimal price)
         {
-            var existing = Cart.FirstOrDefault(c => c.StockItemID == stockItemId);
-            if (existing != null)
-                existing.Quantity += qty;
-            else
-                Cart.Add(new CartItem { StockItemID = stockItemId, ProductName = productName, SizeText = sizeText, Quantity = qty, Price = price });
+            var item = Cart.FirstOrDefault(c => c.StockItemID == id);
+            if (item != null) item.Quantity += qty;
+            else Cart.Add(new CartItem { StockItemID = id, ProductName = name, SizeText = size, Quantity = qty, Price = price });
         }
-
         public static bool Checkout()
         {
             if (Cart.Count == 0 || CurrentUser == null) return false;
-
-            var ctx = Kuzmin_ChudoObuvEntities.GetContext();
+            var ctx = new Kuzmin_ChudoObuvEntities();
             try
             {
-                var newOrder = new Orders
-                {
-                    OrderDate = DateTime.Now,
-                    ID_User = CurrentUser.ID_User,
-                    TotalAmount = Cart.Sum(c => c.Total)
-                };
+                Orders newOrder = new Orders { OrderDate = System.DateTime.Now, ID_User = CurrentUser.ID_User, TotalAmount = Cart.Sum(c => c.Total) };
                 ctx.Orders.Add(newOrder);
                 ctx.SaveChanges();
-
                 foreach (var item in Cart)
                 {
-                    // Убрали PriceAtOrderTime, так как её нет в БД
-                    var newOP = new OrderProducts
-                    {
-                        ID_Order = newOrder.ID_Order,
-                        ID_StockItem = item.StockItemID,
-                        Quantity = item.Quantity
-                    };
-                    ctx.OrderProducts.Add(newOP);
-
-                    var stock = ctx.StockItems.FirstOrDefault(s => s.ID_Item == item.StockItemID);
-                    if (stock != null)
-                    {
-                        stock.ItemsQuantity -= item.Quantity;
-                        if (stock.ItemsQuantity < 0) stock.ItemsQuantity = 0;
-                    }
+                    OrderProducts op = new OrderProducts { ID_Order = newOrder.ID_Order, ID_StockItem = item.StockItemID, Quantity = item.Quantity, PriceAtOrderTime = item.Price };
+                    ctx.OrderProducts.Add(op);
+                    var stock = ctx.StockItems.FirstOrDefault(s => s.ID_StockItem == item.StockItemID);
+                    if (stock != null) stock.ItemsQuantity -= item.Quantity;
                 }
                 ctx.SaveChanges();
                 Cart.Clear();
                 return true;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка при сохранении: " + ex.Message);
-                return false;
-            }
+            catch { return false; }
         }
     }
 }
