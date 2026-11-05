@@ -74,10 +74,20 @@
     <Compile Include="Categories.cs">
       <DependentUpon>KuzminModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="KuzminModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KuzminModel.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="KuzminModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>KuzminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KuzminModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KuzminModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ManagerClass.cs" />
     <Compile Include="Manufactures.cs">
@@ -86,14 +96,14 @@
     <Compile Include="OrderDetailPage.xaml.cs">
       <DependentUpon>OrderDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OrdersPage.xaml.cs">
-      <DependentUpon>OrdersPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="OrderProducts.cs">
       <DependentUpon>KuzminModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Orders.cs">
       <DependentUpon>KuzminModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrdersPage.xaml.cs">
+      <DependentUpon>OrdersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProductDetailPage.xaml.cs">
       <DependentUpon>ProductDetailPage.xaml</DependentUpon>
@@ -138,16 +148,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="KuzminModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KuzminModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="KuzminModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KuzminModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -236,21 +236,23 @@
     <Resource Include="Images\IMG_WS_185528.png" />
     <Resource Include="Images\IMG_WS_185535.png" />
     <Resource Include="Images\IMG_WS_185538.png" />
+    <Resource Include="rec\ЧудоОбувь.ico" />
+    <Resource Include="rec\ЧудоОбувь.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="KuzminModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>KuzminModel.Context.cs</LastGenOutput>
       <DependentUpon>KuzminModel.edmx</DependentUpon>
+      <LastGenOutput>KuzminModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="KuzminModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>KuzminModel.edmx</DependentUpon>
       <LastGenOutput>KuzminModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="rec\ЧудоОбувь.ico" />
-    <Resource Include="rec\ЧудоОбувь.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

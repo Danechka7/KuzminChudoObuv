@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -21,14 +22,14 @@ namespace KuzminChudoObuv
             _product = product;
             DataContext = _product;
 
-            var ctx = KuzminChudoObuvEntities.GetContext();
+            var ctx = Kuzmin_ChudoObuvEntities.GetContext();
             var sizes = ctx.StockItems
                 .Where(s => s.ID_Product == _product.ID_Product && s.ItemsQuantity > 0)
                 .ToList()
                 .Select(s => new SizeItem
                 {
-                    ID_StockItem = s.ID_Item, // В твоей БД это ID_Item
-                    SizeText = s.Sizes.Size.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                    ID_StockItem = s.ID_Item,
+                    SizeText = s.Sizes != null ? s.Sizes.Size.ToString(System.Globalization.CultureInfo.InvariantCulture) : ""
                 }).ToList();
 
             ComboSizes.ItemsSource = sizes;
@@ -42,6 +43,19 @@ namespace KuzminChudoObuv
         {
             var selectedSize = ComboSizes.SelectedItem as SizeItem;
             if (selectedSize == null) { MessageBox.Show("Выберите размер!"); return; }
+
+            var ctx = Kuzmin_ChudoObuvEntities.GetContext();
+            var stock = ctx.StockItems.FirstOrDefault(s => s.ID_Item == selectedSize.ID_StockItem);
+            if (stock == null) return;
+
+            var existingInCart = ManagerClass.Cart.FirstOrDefault(c => c.StockItemID == selectedSize.ID_StockItem);
+            int alreadyInCart = existingInCart != null ? existingInCart.Quantity : 0;
+
+            if (alreadyInCart + _qty > stock.ItemsQuantity)
+            {
+                MessageBox.Show($"На складе осталось {stock.ItemsQuantity} шт., а в корзине уже {alreadyInCart} шт.");
+                return;
+            }
 
             ManagerClass.AddToCart(selectedSize.ID_StockItem, _product.ProductName, selectedSize.SizeText, _qty, _product.ProductCost);
             MessageBox.Show("Добавлено в корзину!");

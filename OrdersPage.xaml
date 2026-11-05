@@ -1,21 +1,28 @@
 ﻿<Page x:Class="KuzminChudoObuv.OrdersPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Заказы" FontFamily="Calibri" Background="White">
+      Title="Все заказы" FontFamily="Calibri" Background="White">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Список заказов" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Список всех заказов" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Name="DeleteBtn" Content="Удалить заказ" Width="150" Height="35" Margin="20,0,0,0" 
+                    Click="Delete_Click" Background="#FF8080"/>
+        </StackPanel>
 
         <ListView Grid.Row="1" Name="OrdersListView" MouseDoubleClick="OrdersListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="№" DisplayMemberBinding="{Binding ID_Order}" Width="80"/>
                     <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding OrderDate, StringFormat=dd.MM.yyyy}" Width="150"/>
-                    <GridViewColumn Header="ФИО Клиента" DisplayMemberBinding="{Binding Users.UserSurname}" Width="300"/>
+                    <!-- Вот тут выводим ФИО -->
+                    <GridViewColumn Header="ФИО Клиента" DisplayMemberBinding="{Binding ClientFIO}" Width="300"/>
+                    <!-- Вот тут выводим сумму -->
+                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding TotalSumText}" Width="150"/>
                 </GridView>
             </ListView.View>
         </ListView>

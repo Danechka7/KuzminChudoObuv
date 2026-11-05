@@ -13,17 +13,17 @@ namespace KuzminChudoObuv
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KuzminChudoObuvEntities : DbContext
+    public partial class Kuzmin_ChudoObuvEntities : DbContext
     {
-        private static KuzminChudoObuvEntities _context;
-        public static KuzminChudoObuvEntities GetContext()
+        private static Kuzmin_ChudoObuvEntities _context;
+        public static Kuzmin_ChudoObuvEntities GetContext()
         {
             if (_context == null)
-                _context = new KuzminChudoObuvEntities();
+                _context = new Kuzmin_ChudoObuvEntities();
             return _context;
         }
-        public KuzminChudoObuvEntities()
-            : base("name=KuzminChudoObuvEntities")
+        public Kuzmin_ChudoObuvEntities()
+            : base("name=Kuzmin_ChudoObuvEntities")
         {
         }
     

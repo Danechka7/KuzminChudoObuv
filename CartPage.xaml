@@ -9,15 +9,35 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Оформление заказа" FontSize="24" FontWeight="Bold"/>
+        <TextBlock Text="Оформление заказа" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
 
         <ListView Grid.Row="1" Name="CartListView" Margin="0,10">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Товар" DisplayMemberBinding="{Binding ProductName}" Width="300"/>
                     <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding SizeText}" Width="100"/>
-                    <GridViewColumn Header="Кол-во" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
+
+                    <GridViewColumn Header="Кол-во" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Content="-" Width="25" Height="25" Click="Minus_Click" Tag="{Binding}"/>
+                                    <TextBlock Text="{Binding Quantity}" Width="30" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                                    <Button Content="+" Width="25" Height="25" Click="Plus_Click" Tag="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                     <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding Total, StringFormat={}{0:N2}}" Width="100"/>
+
+                    <GridViewColumn Header="" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Удалить" Width="80" Height="25" Click="Remove_Click" Tag="{Binding}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

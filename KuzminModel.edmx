@@ -30,6 +30,7 @@
           <Property Name="ID_Item" Type="int" Nullable="false" />
           <Property Name="ID_Order" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="ID_StockItem" Type="int" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -38,6 +39,7 @@
           <Property Name="ID_Order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderDate" Type="date" Nullable="false" />
           <Property Name="ID_User" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -216,7 +218,8 @@
             <DefiningQuery>SELECT 
 [OrderProducts].[ID_Item] AS [ID_Item], 
 [OrderProducts].[ID_Order] AS [ID_Order], 
-[OrderProducts].[Quantity] AS [Quantity]
+[OrderProducts].[Quantity] AS [Quantity], 
+[OrderProducts].[ID_StockItem] AS [ID_StockItem]
 FROM [dbo].[OrderProducts] AS [OrderProducts]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_OrderProducts_Orders" Association="Self.FK_OrderProducts_Orders">
@@ -284,6 +287,7 @@ FROM [dbo].[OrderProducts] AS [OrderProducts]</DefiningQuery>
           <Property Name="ID_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ID_User" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="OrderProducts" Relationship="Self.FK_OrderProducts_Orders" FromRole="Orders" ToRole="OrderProducts" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
         </EntityType>
@@ -363,6 +367,7 @@ FROM [dbo].[OrderProducts] AS [OrderProducts]</DefiningQuery>
           <Property Name="ID_Item" Type="Int32" Nullable="false" />
           <Property Name="ID_Order" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="ID_StockItem" Type="Int32" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_OrderProducts_Orders" FromRole="OrderProducts" ToRole="Orders" />
           <NavigationProperty Name="StockItems" Relationship="Self.FK_OrderProducts_StockItems" FromRole="OrderProducts" ToRole="StockItems" />
         </EntityType>
@@ -474,7 +479,7 @@ FROM [dbo].[OrderProducts] AS [OrderProducts]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KuzminChudoObuvEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Kuzmin_ChudoObuvEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="Manufactures" EntityType="Self.Manufactures" />
           <EntitySet Name="Orders" EntityType="Self.Orders" />
@@ -527,7 +532,7 @@ FROM [dbo].[OrderProducts] AS [OrderProducts]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище Кузьмин_Чудо_ОбувьModelContainer" CdmEntityContainer="KuzminChudoObuvEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Кузьмин_Чудо_ОбувьModelContainer" CdmEntityContainer="Kuzmin_ChudoObuvEntities">
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Кузьмин_Чудо_ОбувьModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
@@ -550,6 +555,7 @@ FROM [dbo].[OrderProducts] AS [OrderProducts]</DefiningQuery>
                 <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -620,6 +626,7 @@ FROM [dbo].[OrderProducts] AS [OrderProducts]</DefiningQuery>
                 <ScalarProperty Name="ID_Item" ColumnName="ID_Item" />
                 <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ID_StockItem" ColumnName="ID_StockItem" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

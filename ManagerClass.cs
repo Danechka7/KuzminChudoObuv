@@ -21,50 +21,43 @@ namespace KuzminChudoObuv
         public static Frame MainFrame { get; set; }
         public static Users CurrentUser { get; set; }
         public static List<CartItem> Cart = new List<CartItem>();
+
         public static void AddToCart(int stockItemId, string productName, string sizeText, int qty, decimal price)
         {
             var existing = Cart.FirstOrDefault(c => c.StockItemID == stockItemId);
             if (existing != null)
-            {
                 existing.Quantity += qty;
-            }
             else
-            {
-                Cart.Add(new CartItem
-                {
-                    StockItemID = stockItemId,
-                    ProductName = productName,
-                    SizeText = sizeText,
-                    Quantity = qty,
-                    Price = price
-                });
-            }
+                Cart.Add(new CartItem { StockItemID = stockItemId, ProductName = productName, SizeText = sizeText, Quantity = qty, Price = price });
         }
+
         public static bool Checkout()
         {
-            if (Cart.Count == 0) return false;
-            if (CurrentUser == null) return false;
+            if (Cart.Count == 0 || CurrentUser == null) return false;
 
-            var ctx = KuzminChudoObuvEntities.GetContext();
-
+            var ctx = Kuzmin_ChudoObuvEntities.GetContext();
             try
             {
                 var newOrder = new Orders
                 {
                     OrderDate = DateTime.Now,
-                    ID_User = CurrentUser.ID_User
+                    ID_User = CurrentUser.ID_User,
+                    TotalAmount = Cart.Sum(c => c.Total)
                 };
-
                 ctx.Orders.Add(newOrder);
                 ctx.SaveChanges();
+
                 foreach (var item in Cart)
                 {
+                    // Убрали PriceAtOrderTime, так как её нет в БД
                     var newOP = new OrderProducts
                     {
                         ID_Order = newOrder.ID_Order,
+                        ID_StockItem = item.StockItemID,
                         Quantity = item.Quantity
                     };
                     ctx.OrderProducts.Add(newOP);
+
                     var stock = ctx.StockItems.FirstOrDefault(s => s.ID_Item == item.StockItemID);
                     if (stock != null)
                     {
@@ -72,7 +65,6 @@ namespace KuzminChudoObuv
                         if (stock.ItemsQuantity < 0) stock.ItemsQuantity = 0;
                     }
                 }
-
                 ctx.SaveChanges();
                 Cart.Clear();
                 return true;

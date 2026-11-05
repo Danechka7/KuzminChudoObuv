@@ -17,6 +17,7 @@ namespace KuzminChudoObuv
         public int ID_Item { get; set; }
         public int ID_Order { get; set; }
         public int Quantity { get; set; }
+        public Nullable<int> ID_StockItem { get; set; }
     
         public virtual Orders Orders { get; set; }
         public virtual StockItems StockItems { get; set; }

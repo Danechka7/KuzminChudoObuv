@@ -52,8 +52,6 @@ namespace KuzminChudoObuv
         public string QuantityText { get; set; }
         public bool IsLowStock { get; set; }
 
-
-
         public virtual Categories Categories { get; set; }
         public virtual Manufactures Manufactures { get; set; }
         public virtual Subcategories Subcategories { get; set; }

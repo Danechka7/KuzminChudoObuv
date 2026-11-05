@@ -22,6 +22,7 @@ namespace KuzminChudoObuv
         public int ID_Order { get; set; }
         public System.DateTime OrderDate { get; set; }
         public int ID_User { get; set; }
+        public Nullable<decimal> TotalAmount { get; set; }
     
         public virtual ICollection<OrderProducts> OrderProducts { get; set; }
         public virtual Users Users { get; set; }
