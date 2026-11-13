@@ -47,19 +47,24 @@ namespace KuzminChudoObuv
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             StockItems selectedStock = ComboSizes.SelectedItem as StockItems;
-            if (selectedStock == null)
+            if (selectedStock == null) { MessageBox.Show("Выберите размер!"); return; }
+
+            if (quantity > selectedStock.ItemsQuantity) { MessageBox.Show("На складе не хватает товара!"); return; }
+            var existing = ManagerClass.Cart.FirstOrDefault(c => c.ID_StockItem == selectedStock.ID_StockItem);
+            if (existing != null)
             {
-                MessageBox.Show("Выберите размер!");
-                return;
+                existing.Quantity += quantity;
+            }
+            else
+            {
+                OrderProducts newItem = new OrderProducts();
+                newItem.ID_StockItem = selectedStock.ID_StockItem;
+                newItem.Quantity = quantity;
+                newItem.PriceAtOrderTime = currentProduct.DiscountPrice;
+
+                ManagerClass.Cart.Add(newItem);
             }
 
-            if (quantity > selectedStock.ItemsQuantity)
-            {
-                MessageBox.Show("На складе не хватает товара!");
-                return;
-            }
-            string sizeStr = selectedStock.Sizes.Size.ToString();
-            ManagerClass.AddToCart(selectedStock.ID_StockItem, currentProduct.ProductName, sizeStr, quantity, currentProduct.DiscountPrice);
             MessageBox.Show("Добавлено в корзину!");
             ManagerClass.MainFrame.GoBack();
         }

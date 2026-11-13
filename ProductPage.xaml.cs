@@ -75,7 +75,7 @@ namespace KuzminChudoObuv
                 display.ProductName = p.ProductName;
                 display.ProductComposition = p.ProductComposition;
                 display.ProductDescription = p.ProductDescription;
-                display.ImagePath = p.ProductImage;
+                display.ImagePath = p.ImagePath;
                 display.ManufactureName = p.Manufactures != null ? p.Manufactures.ManufactureName : "";
                 display.CategoryName = p.Categories != null ? p.Categories.CategoryName : "";
                 int qty = 0;

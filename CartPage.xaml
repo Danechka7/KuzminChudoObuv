@@ -12,8 +12,10 @@
         <ListView Grid.Row="1" Name="CartListView" Margin="10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Товар" DisplayMemberBinding="{Binding ProductNameForCart}" Width="300"/>
-                    <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding SizeTextForCart}" Width="100"/>
+                    <!-- Название товара (через связь со складом) -->
+                    <GridViewColumn Header="Товар" DisplayMemberBinding="{Binding StockItems.Products.ProductName}" Width="300"/>
+                    <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding StockItems.Sizes.Size}" Width="100"/>
+
                     <GridViewColumn Header="Кол-во" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -25,7 +27,9 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding TotalForCart, StringFormat={}{0:N2}}" Width="100"/>
+
+                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding PriceAtOrderTime, StringFormat={}{0:N2}}" Width="100"/>
+
                     <GridViewColumn Header="" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

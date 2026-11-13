@@ -8,10 +8,19 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
         <StackPanel Grid.Row="0" Margin="10">
             <TextBlock Name="OrderInfoText" FontSize="24" FontWeight="Bold"/>
             <TextBlock Name="ClientInfoText" FontSize="16" Margin="5"/>
+
+            <!-- Блок для редактирования (виден только админу) -->
+            <StackPanel Name="EditPanel" Orientation="Horizontal" Margin="5" Visibility="Collapsed">
+                <TextBlock Text="Дата заказа:" FontSize="16" VerticalAlignment="Center" Margin="5"/>
+                <DatePicker Name="OrderDatePicker" Width="150" FontSize="14" Margin="5"/>
+                <Button Content="Сохранить изменения" Width="180" Height="30" Margin="20,5,5,5" Click="SaveChanges_Click" Background="#70B2AF"/>
+            </StackPanel>
         </StackPanel>
+
         <ListView Grid.Row="1" Name="OrderItemsListView" Margin="10">
             <ListView.View>
                 <GridView>
@@ -19,9 +28,23 @@
                     <GridViewColumn Header="Размер" DisplayMemberBinding="{Binding StockItems.Sizes.Size}" Width="100"/>
                     <GridViewColumn Header="Кол-во" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
                     <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding PriceAtOrderTime, StringFormat={}{0:N2} ₽}" Width="120"/>
+
+                    <!-- Кнопка удаления позиции -->
+                    <GridViewColumn Header="" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <!-- Привязываем видимость к свойству IsAdmin страницы -->
+                                <Button Name="DeleteItemBtn" Content="Удалить" Width="80" Height="25" 
+                                Click="DeleteItem_Click" Tag="{Binding}" 
+                                Background="#FF8080"
+                                Visibility="{Binding IsAdminVisible, RelativeSource={RelativeSource AncestorType=Page}}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+
         <TextBlock Grid.Row="2" Name="TotalText" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right" Margin="10"/>
     </Grid>
 </Page>
